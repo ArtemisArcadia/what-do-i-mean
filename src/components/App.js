@@ -1,6 +1,5 @@
-import React from "react";
-
-import NameInput from "./NameInput";
+import React from 'react';
+import NameInput from './NameInput';
 
 const App = () => {
 	return (

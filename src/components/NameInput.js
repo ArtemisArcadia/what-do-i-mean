@@ -1,22 +1,46 @@
-import React from "react";
+import React from 'react';
+import { connect } from 'react-redux';
+import { reduxForm, Field } from 'redux-form';
+import { nameSubmitted } from '../actions/index';
 
 class NameInput extends React.Component {
-	onInputSubmit = () => {
-		console.log("name submitted");
+	onSubmit = formValues => {
+		this.props.nameSubmitted(formValues);
+
+		console.log('you submitted the name' + this.props);
+	};
+
+	renderInput = ({ input, meta }) => {
+		return (
+			<div className="field">
+				{' '}
+				<input {...input} />
+			</div>
+		);
 	};
 
 	render() {
 		return (
-			<div className="ui massive fluid action input">
-				<input type="text" placeholder="Enter Name"></input>
-				<div onClick={e => this.onInputSubmit()} className="ui button blue">
-					Search
-				</div>
-			</div>
+			<form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form">
+				<Field name="username" component={this.renderInput} />
+
+				<button className="ui button primary">What Is IT?</button>
+			</form>
 		);
 	}
 }
 
-export default NameInput;
+const mapStateToProps = state => {
+	return { name: state.names };
+};
+const validate = formValues => {
+	const errors = {};
+	return errors;
+};
 
-//to do: add name changing and update to state of current name / probably, onsubmit do action with the submitted term and use that to make an api request
+const formWrapped = reduxForm({ form: 'nameInput', validate })(NameInput);
+
+export default connect(mapStateToProps, { nameSubmitted })(formWrapped);
+
+//have do: add name changing and update to state of current name / probably,
+// onsubmit do action with the submitted term and use that :to do (make an api request)
