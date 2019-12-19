@@ -1,1 +1,4 @@
-export default axios.create({ baseURL: 'https://www.behindthename.com/api/lookup.xml', query: '' });
+import axios from 'axios';
+
+export default axios.create({ baseURL: 'https://www.behindthename.com/api/lookup.xml?'
+});
