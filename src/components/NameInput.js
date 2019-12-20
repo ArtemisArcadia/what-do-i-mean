@@ -3,11 +3,34 @@ import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { fetchNames } from '../actions/index';
 
+// CommonJS
+const Swal = require('sweetalert2');
+
 class NameInput extends React.Component {
 	onSubmit = async formValues => {
-		await this.props.fetchNames(formValues).then(() => {
-			this.renderOutput();
-		});
+		await this.props
+			.fetchNames(formValues)
+			.then(() => {
+				this.renderOutput();
+			})
+			.catch(response => {
+				this.renderError(response);
+			});
+		return this.errors;
+	};
+	renderError = error => {
+		if (error) {
+			// console.log(error);
+			// alert(JSON.stringify(error.message) + ' An error occured when fetching the name; perhaps the API is down');
+			Swal.fire({
+				title: 'Error!',
+				text: 'An error occured when making the network request: API offline',
+				icon: 'error',
+				confirmButtonText: 'Continue',
+			});
+		} else {
+			return;
+		}
 	};
 
 	renderOutput = () => {
@@ -34,6 +57,7 @@ class NameInput extends React.Component {
 			<div className="ui content">
 				<div className=" ui header" style={{ paddingTop: '10px' }}>
 					Input name for translation...
+					{this.renderError}
 				</div>
 			</div>
 		);
@@ -51,7 +75,7 @@ class NameInput extends React.Component {
 	render() {
 		return (
 			<div style={{ paddingTop: '20px' }}>
-				<form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form">
+				<form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form" autoComplete="off">
 					<Field name="username" component={this.renderInput} />
 
 					<button className="ui button primary">What Is IT?</button>
