@@ -12,15 +12,24 @@ class NameInput extends React.Component {
 		await this.props
 			.fetchNames(formValues)
 			.then(() => {
-				this
-					.renderOutput
-					// const usageKey = this.props.translatedName.usages[0].usage_code;
-					// this.fetchSimilarNames(formValues, usageKey);
-					();
+				this.renderOutput();
+				// const usageKey = this.props.translatedName.usages[0].usage_code;
+				// this.fetchSimilarNames(formValues, usageKey);
 			})
 			.catch(response => {
 				this.renderError(response);
 			});
+
+		if (this.props.errors.error) {
+			Swal.fire({
+				title: `Error: ${this.props.errors.error.error_code}`,
+				text: `${this.props.errors.error.error} `,
+				icon: 'error',
+				confirmButtonText: 'Continue',
+			});
+			return <div>Please enter a name</div>;
+		}
+		//refactor this to a error handling helper function instead of doing it in submit, for readability
 		return this.errors;
 	};
 	renderError = error => {
@@ -39,10 +48,7 @@ class NameInput extends React.Component {
 	};
 
 	renderOutput = () => {
-		if (this.props.translatedName.error_code) {
-			console.log(this.props.translatedName.error_code);
-			return <div>oof</div>;
-		} else if (this.props.translatedName.translatedNames) {
+		if (this.props.translatedName.translatedNames) {
 			console.log(this.props.translatedName.translatedNames[0]);
 			return (
 				<div className="ui list">
@@ -96,7 +102,7 @@ class NameInput extends React.Component {
 }
 
 const mapStateToProps = state => {
-	return { translatedName: state.translatedNames, similarNames: state.similarNames };
+	return { translatedName: state.translatedNames, similarNames: state.similarNames, errors: state.errors };
 };
 
 const validate = formValues => {

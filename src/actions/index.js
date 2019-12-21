@@ -5,8 +5,10 @@ export const fetchNames = formValues => {
 	return async dispatch => {
 		const name = formValues.username;
 		const response = await axios.get(`https://www.behindthename.com/api/lookup.json?name=${name}&key=mo245439977`);
-		console.log(response.data);
+		//console.log(response.data);
 		if (response.data.error_code) {
+			console.log(response.data);
+			dispatch({ type: 'ERROR', payload: response.data });
 			return;
 		}
 		dispatch({ type: 'NAME_TRANSLATED', payload: response.data });
@@ -20,8 +22,10 @@ export const fetchSimilarNames = (formValues, usageKey) => {
 		const response = await axios.get(
 			`https://www.behindthename.com/api/related.json?name=${name}&usage=${usagekey}&key=mo245439977`
 		);
-		console.log(response.data);
+		//	console.log(response.data);
 		if (response.data.error_code) {
+			console.log(response.data);
+			dispatch({ type: 'ERROR', payload: response.data });
 			return;
 		}
 		dispatch({ type: 'SIMILAR_NAMES', payload: response.data });
