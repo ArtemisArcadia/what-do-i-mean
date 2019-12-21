@@ -1,7 +1,7 @@
 export default (state = {}, action) => {
 	switch (action.type) {
-		case 'NAME_SUBMITTED':
-			return { ...state, names: action.payload };
+		case 'SIMILAR_NAMES':
+			return { ...state, similarNames: action.payload };
 		default:
 			return state;
 	}

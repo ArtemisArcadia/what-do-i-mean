@@ -1,17 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { fetchNames } from '../actions/index';
+import { fetchNames, fetchSimilarNames } from '../actions/index';
 
 // CommonJS
 const Swal = require('sweetalert2');
 
 class NameInput extends React.Component {
 	onSubmit = async formValues => {
+		console.log(formValues);
 		await this.props
 			.fetchNames(formValues)
 			.then(() => {
-				this.renderOutput();
+				this
+					.renderOutput
+					// const usageKey = this.props.translatedName.usages[0].usage_code;
+					// this.fetchSimilarNames(formValues, usageKey);
+					();
 			})
 			.catch(response => {
 				this.renderError(response);
@@ -34,20 +39,23 @@ class NameInput extends React.Component {
 	};
 
 	renderOutput = () => {
-		if (this.props.translatedName.translatedNames) {
+		if (this.props.translatedName.error_code) {
+			console.log(this.props.translatedName.error_code);
+			return <div>oof</div>;
+		} else if (this.props.translatedName.translatedNames) {
 			console.log(this.props.translatedName.translatedNames[0]);
 			return (
 				<div className="ui list">
 					<div className="item">
-						<div className="header">Name:</div> {this.props.translatedName.translatedNames[0].name}
+						<div className="header large">Name:</div> {this.props.translatedName.translatedNames[0].name}
 					</div>
 					<div className="item">
-						<div className="header">Gender:</div>
+						<div className="header large">Gender:</div>
 						{this.props.translatedName.translatedNames[0].gender}
 					</div>
-					<div className="item">
+					<div className="item huge">
 						{' '}
-						<div className="header">Origin: </div>
+						<div className="header large">Origin: </div>
 						{this.props.translatedName.translatedNames[0].usages[0].usage_full}
 					</div>
 				</div>
@@ -56,7 +64,6 @@ class NameInput extends React.Component {
 		return (
 			<div className="ui content">
 				<div className=" ui header" style={{ paddingTop: '10px' }}>
-					Input name for translation...
 					{this.renderError}
 				</div>
 			</div>
@@ -65,9 +72,10 @@ class NameInput extends React.Component {
 
 	renderInput = ({ input, meta }) => {
 		return (
-			<div className="field">
+			<div className="field" style={{ paddingTop: '10px' }}>
 				{' '}
 				<input {...input} />
+				{input.touched && input.error && <span>{input.error}</span>}
 			</div>
 		);
 	};
@@ -76,9 +84,10 @@ class NameInput extends React.Component {
 		return (
 			<div style={{ paddingTop: '20px' }}>
 				<form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form" autoComplete="off">
+					<label className="ui header">What is your name?</label>
 					<Field name="username" component={this.renderInput} />
 
-					<button className="ui button primary">What Is IT?</button>
+					<button className="ui button primary">What Does It Mean?</button>
 				</form>
 				<div className="ui content">{this.renderOutput()}</div>
 			</div>
@@ -87,16 +96,23 @@ class NameInput extends React.Component {
 }
 
 const mapStateToProps = state => {
-	return { translatedName: state.translatedNames };
+	return { translatedName: state.translatedNames, similarNames: state.similarNames };
 };
+
 const validate = formValues => {
 	const errors = {};
+	if (!formValues.username) {
+		errors.username = 'Required';
+	}
+	if (!formValues.password) {
+		errors.password = 'Required';
+	}
 	return errors;
 };
 
 const formWrapped = reduxForm({ form: 'nameInput', validate })(NameInput);
 
-export default connect(mapStateToProps, { fetchNames })(formWrapped);
+export default connect(mapStateToProps, { fetchNames, fetchSimilarNames })(formWrapped);
 
 //have do: add name changing and update to state of current name / probably,
 // onsubmit do action with the submitted term and use that :to do (make an api request)

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import names from './nameReducer';
+import similarNames from './similarNamesReducer';
 import translatedNames from './translatedNameReducer';
 
-export default combineReducers({ form: formReducer, names, translatedNames });
+export default combineReducers({ form: formReducer, similarNames, translatedNames });
