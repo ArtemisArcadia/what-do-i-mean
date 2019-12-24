@@ -27,6 +27,8 @@ class NameInput extends React.Component {
 				icon: 'error',
 				confirmButtonText: 'Continue',
 			});
+			this.props.errors.error = null;
+
 			return <div>Please enter a name</div>;
 		}
 		//refactor this to a error handling helper function instead of doing it in submit, for readability

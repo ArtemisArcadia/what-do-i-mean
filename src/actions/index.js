@@ -1,5 +1,6 @@
 import behindthename from '../apis/behindTheName';
 import axios from 'axios';
+import { FETCH_NAMES, ERROR, SIMILAR_NAMES } from './types';
 
 export const fetchNames = formValues => {
 	return async dispatch => {
@@ -8,10 +9,10 @@ export const fetchNames = formValues => {
 		//console.log(response.data);
 		if (response.data.error_code) {
 			console.log(response.data);
-			dispatch({ type: 'ERROR', payload: response.data });
+			dispatch({ type: ERROR, payload: response.data });
 			return;
 		}
-		dispatch({ type: 'NAME_TRANSLATED', payload: response.data });
+		dispatch({ type: FETCH_NAMES, payload: response.data });
 	};
 };
 
@@ -25,14 +26,14 @@ export const fetchSimilarNames = (formValues, usageKey) => {
 		//	console.log(response.data);
 		if (response.data.error_code) {
 			console.log(response.data);
-			dispatch({ type: 'ERROR', payload: response.data });
+			dispatch({ type: ERROR, payload: response.data });
 			return;
 		}
-		dispatch({ type: 'SIMILAR_NAMES', payload: response.data });
+		dispatch({ type: SIMILAR_NAMES, payload: response.data });
 	};
 };
 
-// export const nameSubmitted = formValues => {
+// export const nameSubmitted = formValues => {v
 // 	return async dispatch => {
 // 		const passedInName = formValues.username;
 
