@@ -1,11 +1,13 @@
-import behindthename from '../apis/behindTheName';
-import axios from 'axios';
-import { FETCH_NAMES, ERROR, SIMILAR_NAMES } from './types';
+import behindthename from "../apis/behindTheName";
+import axios from "axios";
+import { FETCH_NAMES, SIMILAR_NAMES, ERROR, CLEAR_ERRORS } from "./types";
 
 export const fetchNames = formValues => {
 	return async dispatch => {
 		const name = formValues.username;
-		const response = await axios.get(`https://www.behindthename.com/api/lookup.json?name=${name}&key=mo245439977`);
+		const response = await axios.get(
+			`https://www.behindthename.com/api/lookup.json?name=${name}&key=mo245439977`
+		);
 		//console.log(response.data);
 		if (response.data.error_code) {
 			console.log(response.data);
@@ -33,7 +35,12 @@ export const fetchSimilarNames = (formValues, usageKey) => {
 	};
 };
 
-// export const nameSubmitted = formValues => {v
+export const clearErrors = () => {
+	return async dispatch => {
+		dispatch({ type: CLEAR_ERRORS });
+	};
+};
+// export const nameSubmitted = formValues => {
 // 	return async dispatch => {
 // 		const passedInName = formValues.username;
 
