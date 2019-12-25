@@ -9,48 +9,29 @@ const Swal = require("sweetalert2");
 class NameInput extends React.Component {
 	onSubmit = async formValues => {
 		console.log(formValues);
-		await this.props
-			.fetchNames(formValues)
-			.then(() => {
-				this.renderOutput();
-				// const usageKey = this.props.translatedName.usages[0].usage_code;
-				// this.fetchSimilarNames(formValues, usageKey);
-			})
-			.catch(response => {
-				this.renderError(response);
-			});
+		await this.props.fetchNames(formValues);
+		this.renderOutput();
+		// const usageKey = this.props.translatedName.usages[0].usage_code;
+		// this.fetchSimilarNames(formValues, usageKey);
 
 		if (this.props.errors.error) {
-			console.log(this.props);
-			Swal.fire({
-				title: `Error: ${this.props.errors.error.error_code}`,
-				text: `${this.props.errors.error.error} `,
-				icon: "error",
-				confirmButtonText: "Continue"
-			}).then(this.props.clearErrors());
-			return <div>Please enter a name</div>;
+			return this.renderError(this.props.errors.error);
 		}
-		//refactor this to a error handling helper function instead of doing it in submit, for readability
-		return this.errors;
 	};
-	renderError = error => {
-		if (error) {
-			// console.log(error);
-			// alert(JSON.stringify(error.message) + ' An error occured when fetching the name; perhaps the API is down');
-			Swal.fire({
-				title: "Error!",
-				text: "An error occured when making the network request: API offline",
-				icon: "error",
-				confirmButtonText: "Continue"
-			});
-		} else {
-			return;
-		}
+
+	renderError = async error => {
+		await Swal.fire({
+			title: `Error: ${this.props.errors.error.error_code}`,
+			text: `${this.props.errors.error.error} `,
+			icon: "error",
+			confirmButtonText: "Continue"
+		});
+		this.props.clearErrors();
+		return <div>Please enter a name</div>;
 	};
 
 	renderOutput = () => {
-		if (this.props.translatedName.translatedNames) {
-			console.log(this.props.translatedName.translatedNames[0]);
+		try {
 			return (
 				<div className="ui list">
 					<div className="item">
@@ -68,14 +49,16 @@ class NameInput extends React.Component {
 					</div>
 				</div>
 			);
-		}
-		return (
-			<div className="ui content">
-				<div className=" ui header" style={{ paddingTop: "10px" }}>
-					{this.renderError}
+		} catch (error) {
+			console.log();
+			return (
+				<div className="ui content">
+					<div className=" ui header" style={{ paddingTop: "10px" }}>
+						{this.renderError}
+					</div>
 				</div>
-			</div>
-		);
+			);
+		}
 	};
 
 	renderInput = ({ input, meta }) => {
