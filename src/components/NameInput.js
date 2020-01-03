@@ -33,24 +33,31 @@ class NameInput extends React.Component {
 	renderOutput = () => {
 		try {
 			return (
-				<div className="ui list">
-					<div className="item">
-						<div className="header large">Name:</div>{" "}
-						{this.props.translatedName.translatedNames[0].name}
-					</div>
-					<div className="item">
-						<div className="header large">Gender:</div>
-						{this.props.translatedName.translatedNames[0].gender}
-					</div>
-					<div className="item huge">
-						{" "}
-						<div className="header large">Origin: </div>
-						{this.props.translatedName.translatedNames[0].usages[0].usage_full}
-					</div>
+				<div className="ui huge">
+					<h1 className="ui header huge">
+						Name :
+						<div className="sub header large">
+							{this.props.translatedName.translatedNames[0].name}
+						</div>
+					</h1>
+					<h2 className="ui header">
+						Gender :
+						<div className="sub header large">
+							{this.props.translatedName.translatedNames[0].gender}
+						</div>
+					</h2>
+					<h3 className="ui header">
+						Origin :
+						<div className="sub header large">
+							{
+								this.props.translatedName.translatedNames[0].usages[0]
+									.usage_full
+							}
+						</div>
+					</h3>
 				</div>
 			);
 		} catch (error) {
-			console.log();
 			return (
 				<div className="ui content">
 					<div className=" ui header" style={{ paddingTop: "10px" }}>
@@ -65,7 +72,7 @@ class NameInput extends React.Component {
 		return (
 			<div className="field" style={{ paddingTop: "10px" }}>
 				{" "}
-				<input {...input} />
+				<input type="text" placeholder="Insert Name Here..." {...input} />
 				{input.touched && input.error && <span>{input.error}</span>}
 			</div>
 		);
@@ -121,3 +128,19 @@ export default connect(mapStateToProps, {
 // onsubmit do action with the submitted term and use that :to do (make an api request)
 //refactor renderOutput to render a list, map over the array and render a list
 //add a theme some styling
+
+// <div className="ui list huge">
+// 	<div className="item large">
+// 		<div className="header huge">Name:</div>{" "}
+// 		{this.props.translatedName.translatedNames[0].name}
+// 	</div>
+// 	<div className="item large">
+// 		<div className="header large">Gender:</div>
+// 		{this.props.translatedName.translatedNames[0].gender}
+// 	</div>
+// 	<div className="item large">
+// 		{" "}
+// 		<div className="header ">Origin: </div>
+// 		{this.props.translatedName.translatedNames[0].usages[0].usage_full}
+// 	</div>
+// </div>
