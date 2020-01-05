@@ -3,6 +3,10 @@ import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { fetchNames, fetchSimilarNames, clearErrors } from "../actions/index";
 
+import { Button, Box, Input, Container, TextField } from "@material-ui/core";
+
+import "./NameInput.css";
+
 // CommonJS
 const Swal = require("sweetalert2");
 
@@ -10,7 +14,7 @@ class NameInput extends React.Component {
 	onSubmit = async formValues => {
 		console.log(formValues);
 		await this.props.fetchNames(formValues);
-		this.renderOutput();
+
 		// const usageKey = this.props.translatedName.usages[0].usage_code;
 		// this.fetchSimilarNames(formValues, usageKey);
 
@@ -18,6 +22,10 @@ class NameInput extends React.Component {
 			return this.renderError(this.props.errors.error);
 		}
 	};
+
+	componentDidUpdate() {
+		this.renderOutput();
+	}
 
 	renderError = async error => {
 		await Swal.fire({
@@ -33,29 +41,30 @@ class NameInput extends React.Component {
 	renderOutput = () => {
 		try {
 			return (
-				<div className="ui huge">
+				<Box className="ui huge">
 					<h1 className="ui header huge">
-						Name :
-						<div className="sub header large">
-							{this.props.translatedName.translatedNames[0].name}
-						</div>
+						<p className="NameInputFont">
+							Name: {this.props.translatedName.translatedNames[0].name}
+						</p>
 					</h1>
-					<h2 className="ui header">
-						Gender :
-						<div className="sub header large">
-							{this.props.translatedName.translatedNames[0].gender}
-						</div>
-					</h2>
-					<h3 className="ui header">
-						Origin :
-						<div className="sub header large">
+
+					<h1 className="ui header huge">
+						<p className="NameInputFont">
+							Gender: {this.props.translatedName.translatedNames[0].gender}
+						</p>
+					</h1>
+
+					<h1 className="ui header">
+						<p className="NameInputFont">
+							{" "}
+							Origin:{" "}
 							{
 								this.props.translatedName.translatedNames[0].usages[0]
 									.usage_full
 							}
-						</div>
-					</h3>
-				</div>
+						</p>
+					</h1>
+				</Box>
 			);
 		} catch (error) {
 			return (
@@ -70,11 +79,17 @@ class NameInput extends React.Component {
 
 	renderInput = ({ input, meta }) => {
 		return (
-			<div className="field" style={{ paddingTop: "10px" }}>
+			<Box className="field" style={{ height: "40px", width: "500px" }}>
 				{" "}
-				<input type="text" placeholder="Insert Name Here..." {...input} />
+				<TextField
+					fullWidth
+					type="text"
+					placeholder="Insert Name Here..."
+					{...input}
+					variant="outlined"
+				/>
 				{input.touched && input.error && <span>{input.error}</span>}
-			</div>
+			</Box>
 		);
 	};
 
@@ -86,12 +101,18 @@ class NameInput extends React.Component {
 					className="ui form"
 					autoComplete="off"
 				>
-					<label className="ui header">What is your name?</label>
-					<Field name="username" component={this.renderInput} />
+					<h1 className="ui header">
+						<p className="NameInputFont">What is your name?</p>
+					</h1>
 
-					<button className="ui button primary">What Does It Mean?</button>
+					<Field name="username" component={this.renderInput} />
+					<Button type="submit" variant="contained" color="primary">
+						What Does it Mean?
+					</Button>
 				</form>
-				<div className="ui content">{this.renderOutput()}</div>
+				<div className="ui content" style={{ paddingTop: "20px" }}>
+					{this.renderOutput()}
+				</div>
 			</div>
 		);
 	}
@@ -124,23 +145,4 @@ export default connect(mapStateToProps, {
 	clearErrors
 })(formWrapped);
 
-//have do: add name changing and update to state of current name / probably,
-// onsubmit do action with the submitted term and use that :to do (make an api request)
-//refactor renderOutput to render a list, map over the array and render a list
-//add a theme some styling
-
-// <div className="ui list huge">
-// 	<div className="item large">
-// 		<div className="header huge">Name:</div>{" "}
-// 		{this.props.translatedName.translatedNames[0].name}
-// 	</div>
-// 	<div className="item large">
-// 		<div className="header large">Gender:</div>
-// 		{this.props.translatedName.translatedNames[0].gender}
-// 	</div>
-// 	<div className="item large">
-// 		{" "}
-// 		<div className="header ">Origin: </div>
-// 		{this.props.translatedName.translatedNames[0].usages[0].usage_full}
-// 	</div>
-// </div>
+//TODO: Add method for sending action for pulling information from wikipedia

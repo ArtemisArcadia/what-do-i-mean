@@ -40,15 +40,6 @@ export const clearErrors = () => {
 		dispatch({ type: CLEAR_ERRORS });
 	};
 };
-// export const nameSubmitted = formValues => {
-// 	return async dispatch => {
-// 		const passedInName = formValues.username;
 
-// 		const response = await namesdb.post('/names', { ...formValues, passedInName });
-// 		dispatch({ type: 'NAME_SUBMITTED', payload: response.data });
-// 	};
-// };
-
-//make an api request to behindthenames api and do something with the data
-//to do: sign up to the api / set up axios configuration / make api request
-//api is broken find a new one
+//make api request to mediawiki, wikipedia api, take that response break it down and load information from one of the articles
+//could embed a url from the respnse in an html tag or directly rip the information from the page and add that to the app
