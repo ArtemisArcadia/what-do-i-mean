@@ -79,7 +79,15 @@ class NameInput extends React.Component {
 
 	renderInput = ({ input, meta }) => {
 		return (
-			<Box className="field" style={{ height: "40px", width: "500px" }}>
+			<Box
+				className="field"
+				style={{
+					height: "40px",
+					width: "500px",
+					borderColor: "black",
+					border: "60px"
+				}}
+			>
 				{" "}
 				<TextField
 					fullWidth
