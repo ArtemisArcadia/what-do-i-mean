@@ -23,3 +23,12 @@
 	/* bring your own prefixes */
 	transform: translate(-50%, -50%);
 }
+
+.main {
+	padding: 50px;
+	/* padding-left: 50px;
+	padding-right: 50px; */
+	background-color: #e2dfd4;
+	opacity: 0.9;
+	border-radius: 500px;
+}

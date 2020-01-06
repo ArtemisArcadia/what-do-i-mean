@@ -2,13 +2,26 @@ import React from "react";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { fetchNames, fetchSimilarNames, clearErrors } from "../actions/index";
-
-import { Button, Box, Input, Container, TextField } from "@material-ui/core";
+import Transition from "./Transition";
 
 import "./NameInput.css";
 
+import {
+	Button,
+	Box,
+	Input,
+	Container,
+	TextField,
+	Fade,
+	Paper
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
 // CommonJS
 const Swal = require("sweetalert2");
+/////////////////////////////////////////////////
+
+/////////////////////////////////////////////////
 
 class NameInput extends React.Component {
 	onSubmit = async formValues => {
@@ -41,30 +54,32 @@ class NameInput extends React.Component {
 	renderOutput = () => {
 		try {
 			return (
-				<Box className="ui huge">
-					<h1 className="ui header huge">
-						<p className="NameInputFont">
-							Name: {this.props.translatedName.translatedNames[0].name}
-						</p>
-					</h1>
+				<Fade in={Transition.checked} timeout={1000}>
+					<Box className="ui huge">
+						<h1 className="ui header huge">
+							<p className="NameInputFont">
+								Name: {this.props.translatedName.translatedNames[0].name}
+							</p>
+						</h1>
 
-					<h1 className="ui header huge">
-						<p className="NameInputFont">
-							Gender: {this.props.translatedName.translatedNames[0].gender}
-						</p>
-					</h1>
+						<h1 className="ui header huge">
+							<p className="NameInputFont">
+								Gender: {this.props.translatedName.translatedNames[0].gender}
+							</p>
+						</h1>
 
-					<h1 className="ui header">
-						<p className="NameInputFont">
-							{" "}
-							Origin:{" "}
-							{
-								this.props.translatedName.translatedNames[0].usages[0]
-									.usage_full
-							}
-						</p>
-					</h1>
-				</Box>
+						<h1 className="ui header">
+							<p className="NameInputFont">
+								{" "}
+								Origin:{" "}
+								{
+									this.props.translatedName.translatedNames[0].usages[0]
+										.usage_full
+								}
+							</p>
+						</h1>
+					</Box>
+				</Fade>
 			);
 		} catch (error) {
 			return (
@@ -79,25 +94,27 @@ class NameInput extends React.Component {
 
 	renderInput = ({ input, meta }) => {
 		return (
-			<Box
-				className="field"
-				style={{
-					height: "40px",
-					width: "500px",
-					borderColor: "black",
-					border: "60px"
-				}}
-			>
-				{" "}
-				<TextField
-					fullWidth
-					type="text"
-					placeholder="Insert Name Here..."
-					{...input}
-					variant="outlined"
-				/>
-				{input.touched && input.error && <span>{input.error}</span>}
-			</Box>
+			<Fade in>
+				<Box
+					className="field"
+					style={{
+						height: "40px",
+						width: "500px",
+						borderColor: "black",
+						border: "60px"
+					}}
+				>
+					{" "}
+					<TextField
+						fullWidth
+						type="text"
+						placeholder="Insert Name Here..."
+						{...input}
+						variant="outlined"
+					/>
+					{input.touched && input.error && <span>{input.error}</span>}
+				</Box>
+			</Fade>
 		);
 	};
 

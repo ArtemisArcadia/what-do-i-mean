@@ -4,25 +4,17 @@ import TranslatedName from "./TranslatedName";
 import NameInformation from "./NameInformation";
 import "./App.css";
 
+import { Paper } from "@material-ui/core";
+
 const App = () => {
 	return (
 		<div className="App">
 			<div className="ui container centered">
-				<div
-					className="ui content centered"
-					style={{
-						padding: "50px",
-						paddingLeft: "50px",
-						paddingRight: "50px",
-						backgroundColor: "white",
-						opacity: "0.9",
-						borderRadius: "25px"
-					}}
-				>
+				<Paper elevation={20} className="ui main content centered">
 					{" "}
 					<NameInput />
 					<NameInformation />
-				</div>
+				</Paper>
 			</div>
 		</div>
 	);
