@@ -54,7 +54,7 @@ class NameInput extends React.Component {
 	renderOutput = () => {
 		try {
 			return (
-				<Fade in={Transition.checked} timeout={1000}>
+				<Fade in timeout={1000}>
 					<Box className="ui huge">
 						<h1 className="ui header huge">
 							<p className="NameInputFont">
