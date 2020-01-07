@@ -4,18 +4,23 @@ import TranslatedName from "./TranslatedName";
 import NameInformation from "./NameInformation";
 import "./App.css";
 
-import { Paper } from "@material-ui/core";
+import { Paper, Box } from "@material-ui/core";
 
 const App = () => {
 	return (
 		<div className="App">
-			<div className="ui container centered">
-				<Paper elevation={20} className="ui main content centered">
-					{" "}
-					<NameInput />
-					<NameInformation />
-				</Paper>
-			</div>
+			<Paper elevation={24} className="title">
+				<p className="title-font">What Do I Mean?</p>
+			</Paper>
+			<Paper
+				elevation={24}
+				className="ui main content centered"
+				style={{ backgroundColor: "transparent" }}
+			>
+				{" "}
+				<NameInput />
+				<NameInformation />
+			</Paper>
 		</div>
 	);
 };

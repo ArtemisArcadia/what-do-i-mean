@@ -28,7 +28,26 @@
 	padding: 50px;
 	/* padding-left: 50px;
 	padding-right: 50px; */
-	background-color: #e2dfd4;
-	opacity: 0.9;
+	background-color: red;
+	opacity: 1;
 	border-radius: 500px;
+}
+
+.title {
+	position: fixed;
+	width: auto;
+	height: "100px";
+	top: 20%;
+	left: 50%;
+	/* bring your own prefixes */
+	transform: translate(-50%, -50%);
+	background-color: #ebe5d7;
+	opacity: 0.6;
+	padding-left: 10px;
+}
+
+.title-font {
+	font-size: 100px;
+	font-family: "Roboto Light", monospace;
+	opacity: 1;
 }

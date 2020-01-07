@@ -1,4 +1,20 @@
-.NameInputFont {
-	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+.name-input-font {
+	font-family: "Roboto Mono", sans-serif, monospace;
+}
+
+.centered {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	/* bring your own prefixes */
+	transform: translate(-50%, -50%);
+}
+
+.main {
+	padding: 50px;
+	/* padding-left: 50px;
+	padding-right: 50px; */
+
+	background-color: #ebe5d7;
+	opacity: 0.6;
 }

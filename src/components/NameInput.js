@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { fetchNames, fetchSimilarNames, clearErrors } from "../actions/index";
-import Transition from "./Transition";
 
 import "./NameInput.css";
 
@@ -13,9 +12,9 @@ import {
 	Container,
 	TextField,
 	Fade,
-	Paper
+	Paper,
+	Fab
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 
 // CommonJS
 const Swal = require("sweetalert2");
@@ -54,32 +53,50 @@ class NameInput extends React.Component {
 	renderOutput = () => {
 		try {
 			return (
-				<Fade in timeout={1000}>
-					<Box className="ui huge">
-						<h1 className="ui header huge">
-							<p className="NameInputFont">
-								Name: {this.props.translatedName.translatedNames[0].name}
-							</p>
-						</h1>
-
-						<h1 className="ui header huge">
-							<p className="NameInputFont">
-								Gender: {this.props.translatedName.translatedNames[0].gender}
-							</p>
-						</h1>
-
-						<h1 className="ui header">
-							<p className="NameInputFont">
-								{" "}
-								Origin:{" "}
-								{
-									this.props.translatedName.translatedNames[0].usages[0]
-										.usage_full
-								}
-							</p>
-						</h1>
-					</Box>
-				</Fade>
+				<div>
+					<Paper
+						elevation={3}
+						style={{
+							padding: "10px",
+							opacity: "0.9",
+							backgroundColor: "transparent"
+						}}
+					>
+						<Paper
+							className="ui huge"
+							style={{ backgroundColor: "white", padding: "10px" }}
+							elevation={24}
+						>
+							<Fade in timeout={1000}>
+								<h1 className="ui header huge">
+									<p className="name-input-font">
+										Name: {this.props.translatedName.translatedNames[0].name}
+									</p>
+								</h1>
+							</Fade>
+							<Fade in timeout={5000}>
+								<h1 className="ui header huge">
+									<p className="name-input-font">
+										Gender:{" "}
+										{this.props.translatedName.translatedNames[0].gender}
+									</p>
+								</h1>
+							</Fade>
+							<Fade in timeout={9000}>
+								<h1 className="ui header">
+									<p className="name-input-font">
+										{" "}
+										Origin:{" "}
+										{
+											this.props.translatedName.translatedNames[0].usages[0]
+												.usage_full
+										}
+									</p>
+								</h1>
+							</Fade>
+						</Paper>
+					</Paper>
+				</div>
 			);
 		} catch (error) {
 			return (
@@ -100,19 +117,22 @@ class NameInput extends React.Component {
 					style={{
 						height: "40px",
 						width: "500px",
-						borderColor: "black",
-						border: "60px"
+						fontFamily: "Roboto",
+						fontSize: "20px"
 					}}
 				>
-					{" "}
 					<TextField
 						fullWidth
 						type="text"
 						placeholder="Insert Name Here..."
 						{...input}
 						variant="outlined"
+						color="#DDDAD3"
+						size="normal"
 					/>
-					{input.touched && input.error && <span>{input.error}</span>}
+					{input.touched && input.error && (
+						<span className="name-input-font">{input.error}</span>
+					)}
 				</Box>
 			</Fade>
 		);
@@ -126,13 +146,18 @@ class NameInput extends React.Component {
 					className="ui form"
 					autoComplete="off"
 				>
-					<h1 className="ui header">
-						<p className="NameInputFont">What is your name?</p>
-					</h1>
+					<div style={{ padding: "10px" }}></div>
 
 					<Field name="username" component={this.renderInput} />
-					<Button type="submit" variant="contained" color="primary">
-						What Does it Mean?
+
+					<Button
+						className="centered name-input-font"
+						type="submit"
+						variant="contained"
+						color="green"
+						size="large"
+					>
+						<span className="name-input-font">What Does it Mean?</span>
 					</Button>
 				</form>
 				<div className="ui content" style={{ paddingTop: "20px" }}>
