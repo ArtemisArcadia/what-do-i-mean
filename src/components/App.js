@@ -10,7 +10,7 @@ const App = () => {
 	return (
 		<div className="App">
 			<Paper elevation={24} className="title">
-				<p className="title-font">What Do I Mean?</p>
+				<p className="title-font">&radic;Name</p>
 			</Paper>
 			<Paper
 				elevation={24}

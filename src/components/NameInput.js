@@ -157,7 +157,7 @@ class NameInput extends React.Component {
 						color="green"
 						size="large"
 					>
-						<span className="name-input-font">What Does it Mean?</span>
+						<span className="name-input-font">Show Me My Name's Roots!</span>
 					</Button>
 				</form>
 				<div className="ui content" style={{ paddingTop: "20px" }}>
