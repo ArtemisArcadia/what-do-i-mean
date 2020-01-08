@@ -5,30 +5,15 @@ import { fetchNames, fetchSimilarNames, clearErrors } from "../actions/index";
 
 import "./NameInput.css";
 
-import {
-	Button,
-	Box,
-	Input,
-	Container,
-	TextField,
-	Fade,
-	Paper,
-	Fab
-} from "@material-ui/core";
+import { Button, Box, TextField, Fade, Paper } from "@material-ui/core";
 
 // CommonJS
 const Swal = require("sweetalert2");
-/////////////////////////////////////////////////
-
-/////////////////////////////////////////////////
 
 class NameInput extends React.Component {
 	onSubmit = async formValues => {
 		console.log(formValues);
 		await this.props.fetchNames(formValues);
-
-		// const usageKey = this.props.translatedName.usages[0].usage_code;
-		// this.fetchSimilarNames(formValues, usageKey);
 
 		if (this.props.errors.error) {
 			return this.renderError(this.props.errors.error);
@@ -70,15 +55,14 @@ class NameInput extends React.Component {
 							<Fade in timeout={1000}>
 								<h1 className="ui header huge">
 									<p className="name-input-font">
-										Name: {this.props.translatedName.translatedNames[0].name}
+										Name: {this.props.fetchedNames.fetchedNames[0].name}
 									</p>
 								</h1>
 							</Fade>
 							<Fade in timeout={5000}>
 								<h1 className="ui header huge">
 									<p className="name-input-font">
-										Gender:{" "}
-										{this.props.translatedName.translatedNames[0].gender}
+										Gender: {this.props.fetchedNames.fetchedNames[0].gender}
 									</p>
 								</h1>
 							</Fade>
@@ -88,7 +72,7 @@ class NameInput extends React.Component {
 										{" "}
 										Origin:{" "}
 										{
-											this.props.translatedName.translatedNames[0].usages[0]
+											this.props.fetchedNames.fetchedNames[0].usages[0]
 												.usage_full
 										}
 									</p>
@@ -170,7 +154,7 @@ class NameInput extends React.Component {
 
 const mapStateToProps = state => {
 	return {
-		translatedName: state.translatedNames,
+		fetchedNames: state.fetchedNames,
 		similarNames: state.similarNames,
 		errors: state.errors
 	};

@@ -1,10 +1,9 @@
 import React from "react";
 import NameInput from "./NameInput";
-import TranslatedName from "./TranslatedName";
 import NameInformation from "./NameInformation";
 import "./App.css";
 
-import { Paper, Box } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 
 const App = () => {
 	return (

@@ -8,7 +8,7 @@ export const fetchNames = formValues => {
 		const response = await axios.get(
 			`https://www.behindthename.com/api/lookup.json?name=${name}&key=mo245439977`
 		);
-		//console.log(response.data);
+
 		if (response.data.error_code) {
 			console.log(response.data);
 			dispatch({ type: ERROR, payload: response.data });
@@ -34,7 +34,7 @@ export const fetchSimilarNames = (formValues, usageKey) => {
 		dispatch({ type: SIMILAR_NAMES, payload: response.data });
 	};
 };
-
+//for extra functionality later
 export const clearErrors = () => {
 	return async dispatch => {
 		dispatch({ type: CLEAR_ERRORS });
