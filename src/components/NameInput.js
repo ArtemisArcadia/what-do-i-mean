@@ -2,27 +2,37 @@ import React from "react";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { fetchNames, fetchSimilarNames, clearErrors } from "../actions/index";
-
+import NameOutput from "./NameOutput";
 import "./NameInput.css";
 
-import { Button, Box, TextField, Fade, Paper } from "@material-ui/core";
+import {
+	Button,
+	Box,
+	Container,
+	TextField,
+	Fade,
+	Paper,
+	Grid
+} from "@material-ui/core";
 
 // CommonJS
 const Swal = require("sweetalert2");
 
 class NameInput extends React.Component {
 	onSubmit = async formValues => {
-		console.log(formValues);
 		await this.props.fetchNames(formValues);
 
 		if (this.props.errors.error) {
-			return this.renderError(this.props.errors.error);
+			this.renderError(this.props.errors.error);
 		}
 	};
 
-	componentDidUpdate() {
-		this.renderOutput();
-	}
+	// componentDidUpdate() {
+	// 	// this.renderOutput();
+	// 	console.log;
+	// 	if (props.fetchedNames.fetchedNames[0])
+	// 		return <NameOutput name={this.props.fetchedNames.fetchedNames[0]} />;
+	// }
 
 	renderError = async error => {
 		await Swal.fire({
@@ -32,65 +42,6 @@ class NameInput extends React.Component {
 			confirmButtonText: "Continue"
 		});
 		this.props.clearErrors();
-		return <div>Please enter a name</div>;
-	};
-
-	renderOutput = () => {
-		try {
-			return (
-				<div>
-					<Paper
-						elevation={3}
-						style={{
-							padding: "10px",
-							opacity: "0.9",
-							backgroundColor: "transparent"
-						}}
-					>
-						<Paper
-							className="ui huge"
-							style={{ backgroundColor: "white", padding: "10px" }}
-							elevation={24}
-						>
-							<Fade in timeout={1000}>
-								<h1 className="ui header huge">
-									<p className="name-input-font">
-										Name: {this.props.fetchedNames.fetchedNames[0].name}
-									</p>
-								</h1>
-							</Fade>
-							<Fade in timeout={5000}>
-								<h1 className="ui header huge">
-									<p className="name-input-font">
-										Gender: {this.props.fetchedNames.fetchedNames[0].gender}
-									</p>
-								</h1>
-							</Fade>
-							<Fade in timeout={9000}>
-								<h1 className="ui header">
-									<p className="name-input-font">
-										{" "}
-										Origin:{" "}
-										{
-											this.props.fetchedNames.fetchedNames[0].usages[0]
-												.usage_full
-										}
-									</p>
-								</h1>
-							</Fade>
-						</Paper>
-					</Paper>
-				</div>
-			);
-		} catch (error) {
-			return (
-				<div className="ui content">
-					<div className=" ui header" style={{ paddingTop: "10px" }}>
-						{this.renderError}
-					</div>
-				</div>
-			);
-		}
 	};
 
 	renderInput = ({ input, meta }) => {
@@ -111,8 +62,8 @@ class NameInput extends React.Component {
 						placeholder="Insert Name Here..."
 						{...input}
 						variant="outlined"
-						color="#DDDAD3"
-						size="normal"
+						color="primary"
+						size="small"
 					/>
 					{input.touched && input.error && (
 						<span className="name-input-font">{input.error}</span>
@@ -123,31 +74,46 @@ class NameInput extends React.Component {
 	};
 
 	render() {
+		console.log(this.props.fetchedNames);
+
 		return (
-			<div style={{ paddingTop: "20px" }}>
-				<form
-					onSubmit={this.props.handleSubmit(this.onSubmit)}
-					className="ui form"
-					autoComplete="off"
-				>
-					<div style={{ padding: "10px" }}></div>
-
-					<Field name="username" component={this.renderInput} />
-
-					<Button
-						className="centered name-input-font"
-						type="submit"
-						variant="contained"
-						color="green"
-						size="large"
+			<Container style={{ paddingTop: 20 }}>
+				<Grid container direction="column" alignItems="center" spacing={10}>
+					<form
+						onSubmit={this.props.handleSubmit(this.onSubmit)}
+						autoComplete="off"
 					>
-						<span className="name-input-font">Show Me My Name's Roots!</span>
-					</Button>
-				</form>
-				<div className="ui content" style={{ paddingTop: "20px" }}>
-					{this.renderOutput()}
-				</div>
-			</div>
+						<Grid item xs={12}>
+							<Field name="username" component={this.renderInput} />
+						</Grid>
+						<Grid
+							item
+							xs={12}
+							container
+							direction="row"
+							justify="center"
+							spacing={10}
+						>
+							<Grid item xs={6}>
+								<Button
+									// className="centered name-input-font"
+									type="submit"
+									variant="contained"
+									color="primary"
+									size="small"
+								>
+									<span className="name-input-font">
+										Show Me My Name's Roots!
+									</span>
+								</Button>
+							</Grid>
+						</Grid>
+					</form>
+					<Grid item xs={12}>
+						<NameOutput names={this.props.fetchedNames.fetchedNames} />
+					</Grid>
+				</Grid>
+			</Container>
 		);
 	}
 }

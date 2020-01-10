@@ -1,9 +1,16 @@
 import behindthename from "../apis/behindTheName";
 import axios from "axios";
-import { FETCH_NAMES, SIMILAR_NAMES, ERROR, CLEAR_ERRORS } from "./types";
+import {
+	FETCH_NAMES,
+	SIMILAR_NAMES,
+	ERROR,
+	CLEAR_ERRORS,
+	CLEAR_NAMES
+} from "./types";
 
 export const fetchNames = formValues => {
 	return async dispatch => {
+		dispatch({ type: CLEAR_NAMES });
 		const name = formValues.username;
 		const response = await axios.get(
 			`https://www.behindthename.com/api/lookup.json?name=${name}&key=mo245439977`
@@ -12,8 +19,10 @@ export const fetchNames = formValues => {
 		if (response.data.error_code) {
 			console.log(response.data);
 			dispatch({ type: ERROR, payload: response.data });
+
 			return;
 		}
+		console.log("response: ", response.data);
 		dispatch({ type: FETCH_NAMES, payload: response.data });
 	};
 };
