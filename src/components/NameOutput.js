@@ -1,7 +1,7 @@
 import React from "react";
 
 import { styled } from "@material-ui/core/styles";
-import { Button, Box, TextField, Fade, Paper } from "@material-ui/core";
+import { Box, Fade, Paper } from "@material-ui/core";
 
 const TransparentPaper = styled(Paper)({
 	padding: "10px",
@@ -10,12 +10,6 @@ const TransparentPaper = styled(Paper)({
 });
 
 const NameOutput = ({ names }) => {
-	console.log("output", names);
-	function renderError(error) {
-		console.log();
-		this.props.clearErrors();
-	}
-
 	if (names) {
 		const TIME_OUT = 1000;
 

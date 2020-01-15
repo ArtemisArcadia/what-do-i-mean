@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { fetchNames, fetchSimilarNames, clearErrors } from "../actions/index";
 import NameOutput from "./NameOutput";
+
 import "./NameInput.css";
 
 import {
@@ -11,8 +12,8 @@ import {
 	Container,
 	TextField,
 	Fade,
-	Paper,
-	Grid
+	Grid,
+	Paper
 } from "@material-ui/core";
 
 // CommonJS
@@ -27,24 +28,20 @@ class NameInput extends React.Component {
 		}
 	};
 
-	// componentDidUpdate() {
-	// 	// this.renderOutput();
-	// 	console.log;
-	// 	if (props.fetchedNames.fetchedNames[0])
-	// 		return <NameOutput name={this.props.fetchedNames.fetchedNames[0]} />;
-	// }
-
 	renderError = async error => {
+		const lower = this.props.errors.error.error;
+		const upper = lower.replace(/^\w/, c => c.toUpperCase());
+
 		await Swal.fire({
-			title: `Error: ${this.props.errors.error.error_code}`,
-			text: `${this.props.errors.error.error} `,
+			title: `Error : ${this.props.errors.error.error_code}`,
+			text: upper,
 			icon: "error",
 			confirmButtonText: "Continue"
 		});
 		this.props.clearErrors();
 	};
 
-	renderInput = ({ input, meta }) => {
+	renderInput = ({ input, meta: { touched, error, invalid } }) => {
 		return (
 			<Fade in>
 				<Box
@@ -53,20 +50,26 @@ class NameInput extends React.Component {
 						height: "40px",
 						width: "500px",
 						fontFamily: "Roboto",
-						fontSize: "20px"
+						fontSize: "20px",
+						color: "white"
 					}}
 				>
 					<TextField
+						id="filled-input"
 						fullWidth
 						type="text"
+						helperText={touched && error}
+						error={touched && error}
 						placeholder="Insert Name Here..."
 						{...input}
 						variant="outlined"
-						color="primary"
-						size="small"
+						color="secondary"
+						size
 					/>
 					{input.touched && input.error && (
-						<span className="name-input-font">{input.error}</span>
+						<Box component="span" className="name-input-font">
+							{input.error}
+						</Box>
 					)}
 				</Box>
 			</Fade>
@@ -74,45 +77,38 @@ class NameInput extends React.Component {
 	};
 
 	render() {
-		console.log(this.props.fetchedNames);
-
 		return (
 			<Container style={{ paddingTop: 20 }}>
-				<Grid container direction="column" alignItems="center" spacing={10}>
-					<form
-						onSubmit={this.props.handleSubmit(this.onSubmit)}
-						autoComplete="off"
-					>
+				<form
+					onSubmit={this.props.handleSubmit(this.onSubmit)}
+					autoComplete="off"
+				>
+					<Grid container direction="column" alignItems="center" spacing={2}>
 						<Grid item xs={12}>
-							<Field name="username" component={this.renderInput} />
+							<Paper style={{ paddingBottom: 13 }}>
+								<Field name="username" component={this.renderInput} />
+							</Paper>
 						</Grid>
-						<Grid
-							item
-							xs={12}
-							container
-							direction="row"
-							justify="center"
-							spacing={10}
-						>
-							<Grid item xs={6}>
-								<Button
-									// className="centered name-input-font"
-									type="submit"
-									variant="contained"
-									color="primary"
-									size="small"
-								>
-									<span className="name-input-font">
+
+						<Grid item xs={12} container direction="row" justify="center">
+							<Grid
+								container
+								item
+								xs={12}
+								alignItems="center"
+								justify="center"
+								style={{ textAlign: "center" }}
+							>
+								<Button type="submit" variant="contained" color="primary">
+									<Box component="span" className="name-input-font">
 										Show Me My Name's Roots!
-									</span>
+									</Box>
 								</Button>
 							</Grid>
 						</Grid>
-					</form>
-					<Grid item xs={12}>
-						<NameOutput names={this.props.fetchedNames.fetchedNames} />
 					</Grid>
-				</Grid>
+					<NameOutput names={this.props.fetchedNames.fetchedNames} />
+				</form>
 			</Container>
 		);
 	}
