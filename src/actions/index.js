@@ -1,4 +1,3 @@
-import behindthename from "../apis/behindTheName";
 import axios from "axios";
 import {
 	FETCH_NAMES,
