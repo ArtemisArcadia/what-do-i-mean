@@ -44,7 +44,7 @@ export const fetchSimilarNames = (formValues, usageKey) => {
 };
 //for extra functionality later
 export const clearErrors = () => {
-	return async dispatch => {
+	return dispatch => {
 		dispatch({ type: CLEAR_ERRORS });
 	};
 };
