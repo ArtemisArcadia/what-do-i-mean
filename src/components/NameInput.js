@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { fetchNames, fetchSimilarNames, clearErrors } from "../actions/index";
 
-// CommonJS
-const Swal = require("sweetalert2");
+import Swal from "sweetalert2";
 
 class NameInput extends React.Component {
 	onSubmit = async formValues => {
