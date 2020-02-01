@@ -44,9 +44,7 @@ export const fetchSimilarNames = (formValues, usageKey) => {
 };
 //for extra functionality later
 export const clearErrors = () => {
-	return dispatch => {
-		dispatch({ type: CLEAR_ERRORS });
-	};
+	return { type: CLEAR_ERRORS };
 };
 
 //make api request to mediawiki, wikipedia api, take that response break it down and load information from one of the articles
