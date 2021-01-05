@@ -5,7 +5,7 @@
 	"homepage": "http://osmanabdulmoomin.github.io/what-do-i-mean",
 	"dependencies": {
 		"@material-ui/core": "^4.8.2",
-		"axios": "^0.19.0",
+		"axios": "^0.21.1",
 		"bootstrap": "^4.4.1",
 		"gh-pages": "^2.1.1",
 		"jquery": "^3.4.1",
